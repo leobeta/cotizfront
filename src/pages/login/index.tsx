@@ -1,6 +1,8 @@
 import {Box, Button, Container, Grid, Paper, TextField, Typography} from '@mui/material';
 
+import { LoginValidate } from '../../utils/validateForm';
 import React from "react";
+import { useNotification } from '../../context/notification.context';
 
 type LoginType = {
   username: string;
@@ -8,6 +10,7 @@ type LoginType = {
 }
 
 export const LoginPage: React.FC<{}> = () => {
+  const { getError, getSuccess } = useNotification();
   const [loginData, setLoginData] = React.useState<LoginType>({
     username: '',
     password: ''
@@ -21,7 +24,11 @@ export const LoginPage: React.FC<{}> = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
-    console.log(loginData)
+    LoginValidate.validate(loginData).then(() => {
+      getSuccess(JSON.stringify(loginData));
+    }).catch((error) => {
+      getError(error.message);
+    })
   }
 
   return (
@@ -35,8 +42,8 @@ export const LoginPage: React.FC<{}> = () => {
             <Paper sx={{padding: '1.2em', borderRadius: '0.5em'}}>
               <Typography sx={{mt: 1, mb: 1}} variant='h4'>Truevice Login</Typography>
               <Box component={'form'} onSubmit={handleSubmit}>
-                <TextField margin='normal' name='username' fullWidth label='Username' sx={{mt: 2, mb: 1.5}} type='text' required onChange={dataLogin}/>
-                <TextField margin='normal' name='password' fullWidth label='Password' sx={{mt: 1.5, mb: 1.5}} type='password' required onChange={dataLogin} />
+                <TextField margin='normal' name='username' fullWidth label='Username' sx={{mt: 2, mb: 1.5}} type='text' onChange={dataLogin}/>
+                <TextField margin='normal' name='password' fullWidth label='Password' sx={{mt: 1.5, mb: 1.5}} type='password' onChange={dataLogin} />
                 <Button type='submit' fullWidth variant='contained' sx={{mt: 1.5, mb: 3}}>Login</Button>
               </Box>
             </Paper>
