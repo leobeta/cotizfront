@@ -34,8 +34,8 @@ const theme = createTheme({
           textTransform: 'none',
           textShadow: "none",
           borderRadius: "0.5em"
-        }
-      }
+        },
+      },
     },
     MuiPaper: {
       defaultProps: {
@@ -43,8 +43,22 @@ const theme = createTheme({
           color: themePalette.LIME
         }
       }
-    }
-  }
+    },
+    MuiAlert: {
+      defaultProps: {
+        style: {
+          borderRadius: "0.8em",
+          fontSize: "1em",
+        },
+      },
+      styleOverrides: {
+        standardError: {
+          border: `1px solid ${themePalette.ERROR_MAIN}`,
+          background: themePalette.BG_ERROR_MAIN
+        }
+      }
+    },
+  },
 })
 
 export const ThemeConfig: React.FC<ThemeProp> = ({ children }) => {
