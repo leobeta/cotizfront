@@ -40,13 +40,6 @@ const theme = createTheme({
         },
       },
     },
-    MuiPaper: {
-      defaultProps: {
-        style: {
-          color: themePalette.LIME
-        }
-      }
-    },
     MuiAlert: {
       defaultProps: {
         style: {
